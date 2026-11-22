@@ -1,0 +1,6 @@
+node_modules/
+web/dist/
+web/.env
+*.log
+seed.sql
+scripts/test/ui-smoke/fixture.json
