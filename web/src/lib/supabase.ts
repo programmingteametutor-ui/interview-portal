@@ -3,7 +3,10 @@ import { createClient } from "@supabase/supabase-js";
 const url = import.meta.env.VITE_SUPABASE_URL as string;
 const key = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 
-if (!url || !key) {
+/** True when the build was made without VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY (e.g. not set on the host). */
+export const configMissing = !url || !key;
+
+if (configMissing) {
   // eslint-disable-next-line no-console
   console.error("Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — copy web/.env.example to web/.env");
 }

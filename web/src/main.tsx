@@ -5,6 +5,7 @@ import { SessionProvider, useSession } from "./lib/session";
 import { useRoute } from "./lib/router";
 import { ToastProvider, Loading } from "./components/ui";
 import { Layout } from "./components/Layout";
+import { configMissing } from "./lib/supabase";
 import { Login } from "./pages/Login";
 import { Dashboard } from "./pages/Dashboard";
 import { Intake } from "./pages/Intake";
@@ -27,6 +28,23 @@ const PAGES: Record<string, ComponentType> = {
 };
 
 function App() {
+  if (configMissing) {
+    return (
+      <div className="flex min-h-full items-center justify-center p-6 text-center">
+        <div className="max-w-md space-y-2">
+          <p className="font-medium text-slate-800">The portal is not configured.</p>
+          <p className="text-sm text-slate-500">
+            This build has no <code>VITE_SUPABASE_URL</code> / <code>VITE_SUPABASE_ANON_KEY</code>. Set them in the hosting
+            provider's environment variables (e.g. Vercel → Settings → Environment Variables) and redeploy.
+          </p>
+        </div>
+      </div>
+    );
+  }
+  return <ConfiguredApp />;
+}
+
+function ConfiguredApp() {
   const s = useSession();
   const { page } = useRoute();
   if (s.loading) return <Loading />;
