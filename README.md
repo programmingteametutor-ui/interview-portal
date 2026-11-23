@@ -29,7 +29,9 @@ See **COVERAGE.md** for a function-by-function map from the old Apps Script port
 1. Create a Supabase project (region **Mumbai / ap-south-1** is closest to the team).
 2. Apply the migrations **in order**, either:
    - `supabase link --project-ref <ref> && supabase db push` (Supabase CLI), or
-   - paste each file from `supabase/migrations/` into **SQL Editor → Run**, 1 → 5.
+   - paste each file from `supabase/migrations/` into **SQL Editor → Run**, in file-name order (1 → 8).
+     Don't skip `…000008_api_grants.sql`: newer Supabase projects don't grant table access to logged-in
+     users automatically, and without it every page fails with "permission denied for table …".
 
 ## 2. Configure login (email one-time code)
 
